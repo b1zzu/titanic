@@ -8,12 +8,9 @@
 
 import pandas
 from sklearn.utils import shuffle
+import constants
 
 ORIGINAL_TRAIN = "./data/original_train.csv"
-
-TRAIN = "./data/train.csv"
-TEST = "./data/test.csv"
-PROVE = "./data/prove.csv"
 
 df = pandas.read_csv(ORIGINAL_TRAIN)
 
@@ -47,6 +44,6 @@ assert len(train) == train_length
 assert len(test) == test_length
 assert len(prove) == prove_length
 
-train.to_csv(TRAIN)
-test.to_csv(TEST)
-prove.to_csv(PROVE)
+train.to_csv(constants.TRAIN)
+test.to_csv(constants.TEST)
+prove.to_csv(constants.PROVE)
