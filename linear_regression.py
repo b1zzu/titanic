@@ -1,46 +1,60 @@
-#!/usr/bin/env python
 
 # Try to train a linear regression model
 
+# %%
 from sklearn.linear_model import LinearRegression
 import pandas
 import constants
+import matplotlib.pyplot as plt
 
 
-def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.DataFrame]:
-    x = data[['Pclass', 'Age']].copy()
+def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.Series]:
+    x = data[['Age', 'Pclass', 'SibSp', 'Parch', 'Fare']].copy()
     y = data['Survived'].copy()
+
+    # Fill Sex, Embarked
+    x['Sex'] = pandas.factorize(data['Sex'])[0]
+
+    # Doesn't improve
+    # x['Embarked'] = pandas.factorize(data['Embarked'])[0]
 
     # Fill NaN with the mean of all others
     x['Age'].fillna(round(x['Age'].mean(), 1), inplace=True)
 
-    # Power of Pclass
-    for i in range(2, 10):
-        x['Pclass^{}'.format(i)] = x['Pclass'].pow(i)
-
-    # Power of Age
-    for i in range(2, 60):
-        x['Age^{}'.format(i)] = x['Age'].pow(i)
-
     return [x, y]
 
 
+def evalute(model: LinearRegression, x: pandas.DataFrame, y: pandas.DataFrame):
+
+    score = model.score(x, y)
+
+    prediction = linear.predict(x)
+    prediction[prediction >= 0.5] = 1
+    prediction[prediction < 0.5] = 0
+    result = prediction == y
+    per = result.value_counts(normalize=True)[True]
+
+    return [score, per]
+
+
+# %%
 train = pandas.read_csv(constants.TRAIN)
-test = pandas.read_csv(constants.TEST)
-
 [x_train, y_train] = prepare(train)
-[x_test, y_test] = prepare(test)
 
-print("\nTrain:")
-print(x_train.head())
-
-print("\nTest:")
-print(x_test.head())
-
-linear = LinearRegression(normalize=True)
+linear = LinearRegression()
 linear.fit(x_train, y_train)
 
-print("\nScore:")
-print("Train: {}".format(linear.score(x_train, y_train)))
+evalute(linear, x_train, y_train)
 
-print("Test: {}".format(linear.score(x_test, y_test)))
+# %%
+test = pandas.read_csv(constants.TEST)
+[x_test, y_test] = prepare(test)
+evalute(linear, x_test, y_test)
+
+# %%
+prove = pandas.read_csv(constants.PROVE)
+[x_prove, y_prove] = prepare(prove)
+evalute(linear, x_prove, y_prove)
+
+
+# %%
