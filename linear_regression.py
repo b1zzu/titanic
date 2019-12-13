@@ -14,8 +14,13 @@ def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.DataFrame]:
     # Fill NaN with the mean of all others
     x['Age'].fillna(round(x['Age'].mean(), 1), inplace=True)
 
+    # Power of Pclass
+    for i in range(2, 10):
+        x['Pclass^{}'.format(i)] = x['Pclass'].pow(i)
+
     # Power of Age
-    x['Age^2'] = x['Age'].pow(2)
+    for i in range(2, 60):
+        x['Age^{}'.format(i)] = x['Age'].pow(i)
 
     return [x, y]
 
