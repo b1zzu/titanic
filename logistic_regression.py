@@ -8,7 +8,7 @@ import constants
 import matplotlib.pyplot as plt
 
 
-def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.Series]:
+def prepare(data: pandas.DataFrame, age_fill: int) -> [pandas.DataFrame, pandas.Series]:
     x = data[['Age', 'Pclass', 'SibSp', 'Parch', 'Fare']].copy()
     y = data['Survived'].copy()
 
@@ -19,7 +19,7 @@ def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.Series]:
     # x['Embarked'] = pandas.factorize(data['Embarked'])[0]
 
     # Fill NaN with the mean of all others
-    x['Age'].fillna(round(x['Age'].mean(), 1), inplace=True)
+    x['Age'].fillna(age_fill, inplace=True)
 
     return [x, y]
 
@@ -39,7 +39,8 @@ def evalute(model: LogisticRegression, x: pandas.DataFrame, y: pandas.DataFrame)
 
 # %%
 train = pandas.read_csv(constants.TRAIN)
-[x_train, y_train] = prepare(train)
+age_fill = round(train['Age'].median(), 1)
+[x_train, y_train] = prepare(train, age_fill)
 
 linear = LogisticRegression()
 linear.fit(x_train, y_train)
@@ -48,12 +49,12 @@ evalute(linear, x_train, y_train)
 
 # %%
 test = pandas.read_csv(constants.TEST)
-[x_test, y_test] = prepare(test)
+[x_test, y_test] = prepare(test, age_fill)
 evalute(linear, x_test, y_test)
 
 # %%
 prove = pandas.read_csv(constants.PROVE)
-[x_prove, y_prove] = prepare(prove)
+[x_prove, y_prove] = prepare(prove, age_fill)
 evalute(linear, x_prove, y_prove)
 
 
