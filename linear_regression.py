@@ -1,7 +1,3 @@
-
-# Try to train a linear regression model
-
-# %%
 from sklearn.linear_model import LinearRegression
 import constants
 import util

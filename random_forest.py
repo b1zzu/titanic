@@ -1,7 +1,3 @@
-
-# Try to train a linear regression model
-
-# %%
 from sklearn.ensemble import RandomForestClassifier
 import constants
 import util
