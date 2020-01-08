@@ -1,4 +1,5 @@
 import pandas
+import numpy
 
 
 def read(file: str) -> [pandas.DataFrame, pandas.Series]:
@@ -22,14 +23,6 @@ def prepare(data: pandas.DataFrame) -> [pandas.DataFrame, pandas.Series]:
     return [x, y]
 
 
-def evalute(model, x: pandas.DataFrame, y: pandas.DataFrame):
-
-    score = model.score(x, y)
-
-    prediction = model.predict(x)
-    prediction[prediction >= 0.5] = 1
-    prediction[prediction < 0.5] = 0
-    result = prediction == y
-    per = result.value_counts(normalize=True)[True]
-
-    return [score, per]
+def readd(file: str):
+    [x, y] = read(file)
+    return [x.values, numpy.asarray(y)]
