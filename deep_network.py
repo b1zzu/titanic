@@ -8,10 +8,9 @@ import util
 [x_prove, y_prove] = util.readd(constants.PROVE)
 
 model = keras.models.Sequential()
-model.add(keras.layers.Dense(32, input_dim=6, activation='relu'))
+model.add(keras.layers.Dense(28, input_dim=6, activation='relu'))
 model.add(keras.layers.Dense(1, activation='sigmoid'))
-model.compile(optimizer='adam',
-              loss='binary_crossentropy',
+model.compile(optimizer='adam', loss='binary_crossentropy',
               metrics=['accuracy'])
 
 model.fit(x_train, y_train, epochs=5000, batch_size=512)
