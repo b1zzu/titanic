@@ -1,0 +1,9 @@
+version: 1.16.0
+files:
+  - url: Appium-linux-1.16.0.AppImage
+    sha512: 8KThiPvOzbgw+5gReplO0irUHGmbJPbArnj7z3/BYGykBtc9mVYMAcP/BOsaXcLzY2HBVJYrECWfQFa2rQDRWw==
+    size: 123204011
+    blockMapSize: 129775
+path: Appium-linux-1.16.0.AppImage
+sha512: 8KThiPvOzbgw+5gReplO0irUHGmbJPbArnj7z3/BYGykBtc9mVYMAcP/BOsaXcLzY2HBVJYrECWfQFa2rQDRWw==
+releaseDate: '2020-01-10T23:00:41.836Z'
